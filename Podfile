@@ -7,4 +7,6 @@ target 'Example' do
 
   # Pods for Example
 
+  pod 'Stackberry'
+
 end

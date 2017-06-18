@@ -48,6 +48,7 @@ class UserListViewController: UIViewController {
         // table view
         
         tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: userCellReuseIdentifier)
         
         // data source
         
@@ -67,6 +68,13 @@ class UserListViewController: UIViewController {
         // our query object doesn't take in any parameters
         
         let usersQueryObject = UsersQueryObject()
+        
+        // the query object needs to be added to the realm
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(usersQueryObject)
+        }
         
         // now we can initiate the active sync
         

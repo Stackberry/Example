@@ -11,4 +11,4 @@ in the root directory. This app needs to connect to a Stackberry Backend to work
 
 ## Issues and Feedback
 
-If you run into any issues or have feedback, feel free to file them here or contact us on Slack ([slack.stackberry.io](https://slack.stackberry.io)
+If you run into any issues or have feedback, feel free to file them here or contact us on Slack ([slack.stackberry.io](https://slack.stackberry.io))

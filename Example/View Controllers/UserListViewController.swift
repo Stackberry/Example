@@ -78,7 +78,7 @@ class UserListViewController: UIViewController {
         
         // now we can initiate the active sync
         
-        activeSyncToken = Stackberry.activeSync(queryObject: usersQueryObject)
+        activeSyncToken = Stackberry.activeSync(queryObject: usersQueryObject, deleteUnmatchedLocal: true)
         
         // the active sync will continue as long as we retain the token (in this case 
         // for the lifetime of this view controller)

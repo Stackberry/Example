@@ -1,4 +1,4 @@
-# Example
+# Stackberry iOS Example
 This is an example of how to use the Stackberry iOS SDK. Check out the Stackberry Guide (link to be posted) and walk along with this starter project.
 
 ## Getting Started

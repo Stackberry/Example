@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="suz-WT-gDV">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="suz-WT-gDV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,7 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.92156862750000001" green="0.16078431369999999" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.12156862745098039" green="0.50196078431372548" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="RB9-y2-5Iy" kind="relationship" relationship="rootViewController" id="8aK-6R-nxb"/>
@@ -27,7 +31,7 @@
             </objects>
             <point key="canvasLocation" x="-1207" y="83"/>
         </scene>
-        <!--User List View Controller-->
+        <!--Live User List-->
         <scene sceneID="hDl-RD-Q7I">
             <objects>
                 <viewController id="RB9-y2-5Iy" customClass="UserListViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +56,7 @@
                             <constraint firstAttribute="trailing" secondItem="6gK-OE-Xdc" secondAttribute="trailing" id="lNy-H6-XIp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="gbv-ev-qs5"/>
+                    <navigationItem key="navigationItem" title="Live User List" id="gbv-ev-qs5"/>
                     <connections>
                         <outlet property="tableView" destination="6gK-OE-Xdc" id="zKi-Fc-k3u"/>
                     </connections>

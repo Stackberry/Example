@@ -1,5 +1,5 @@
 # Stackberry iOS Example
-This is an example of how to use the Stackberry iOS SDK. Check out the Stackberry Guide (link to be posted) and walk along with this starter project.
+This is an example of how to use the Stackberry iOS SDK. Check out the [Getting Started Guide](https://stackberry.io/guides/getting-started-guide/) and walk along with this starter project.
 
 ## Getting Started
 
@@ -11,4 +11,4 @@ in the root directory. This app needs to connect to a Stackberry Backend to work
 
 ## Issues and Feedback
 
-If you run into any issues or have feedback, feel free to file them here or contact us on Slack ([slack.stackberry.io](https://slack.stackberry.io))
+If you run into any issues or have feedback, feel free to file them here or [contact us on Slack](https://slack.stackberry.io)

@@ -16,6 +16,16 @@ class UserListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var createUserView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var createUserButton: UIButton!
+    
+    // MARK: - constraints
+    
+    @IBOutlet weak var createUserViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorViewHeightConstraint: NSLayoutConstraint!
+    
     // MARK: - properties
     
     var users: Results<User>?
@@ -43,23 +53,33 @@ class UserListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        // create button
-        
-        let createButton = UIButton(type: .system)
-        createButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        let inset: CGFloat  = 10
-        createButton.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        createButton.imageView?.contentMode = .scaleAspectFit
-        createButton.setImage(#imageLiteral(resourceName: "create"), for: .normal)
-        createButton.addTarget(self, action: #selector(didPressCreateButton), for: .touchUpInside)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: createButton)
-        
         // table view
         
         tableView.dataSource = self
+        tableView.rowHeight = 50
         tableView.register(UITableViewCell.self,
                            forCellReuseIdentifier: userCellReuseIdentifier)
+        
+        // create user view
+        
+        // separator view
+        
+        separatorViewHeightConstraint.constant = 1.0/UIScreen.main.scale // 1 pixel
+        
+        // user name text field
+        
+        userNameTextField.placeholder = NSLocalizedString("User Name", comment: "")
+        userNameTextField.addTarget(self, action: #selector(userNameTextFieldDidChange), for: .editingChanged)
+        
+        // create user button
+        
+        createUserButton.imageView?.contentMode = .scaleAspectFit
+        let inset: CGFloat = 6
+        createUserButton.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        
+        // register for notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         // data source
         
@@ -101,70 +121,42 @@ class UserListViewController: UIViewController {
     
     // MARK: - actions
     
-    func didPressCreateButton() {
+    func userNameTextFieldDidChange() {
+        createUserButton.isEnabled = userNameTextField.text?.isEmpty == false
+    }
+    
+    @IBAction func didPressCreateUserButton() {
         
-        // show alert view controller to create new user
+        let user = User()
+        user.name = userNameTextField.text ?? NSLocalizedString("No Name", comment: "")
         
-        let alertController = UIAlertController(title: NSLocalizedString("Create User", comment: ""),
-                                                message: NSLocalizedString("Enter the user's name", comment: ""),
-                                                preferredStyle: .alert)
-        
-        // cancel action
-        
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-                                         style: .cancel,
-                                         handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // create action
-        
-        let createAction = UIAlertAction(title: NSLocalizedString("Create", comment: ""),
-                                         style: .default) { _ in
-                                          
-                                            // create user locally, our realm notification block will handle the ui updates automatically!
-                                            
-                                            guard let textField = alertController.textFields?.first else {
-                                                return
-                                            }
-                                            
-                                            let user = User()
-                                            user.name = textField.text ?? NSLocalizedString("No Name", comment: "")
-                                            
-                                            let realm = try! Realm()
-                                            try! realm.write {
-                                                realm.add(user)
-                                            }
-                                            
-                                            // push to backend. It's really that simple
-                                            
-                                            Stackberry.push(user)
-                                            
-        }
-        createAction.isEnabled = false
-        alertController.addAction(createAction)
-        
-        // text field
-        
-        alertController.addTextField { textField in
-            
-            textField.placeholder = NSLocalizedString("Name", comment: "")
-            textField.autocapitalizationType = .words
-            
-            NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-                createAction.isEnabled = textField.text != ""
-            }
-            
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(user)
         }
         
-        present(alertController, animated: true, completion: nil)
+        // push to backend. It's really that simple
+        
+        Stackberry.push(user)
+        
+        // clear text
+        
+        userNameTextField.text = nil
+        createUserButton.isEnabled = false
         
     }
     
     func didPressDeleteButton(button: UIButton) {
         
-        // get user by button tag
+        // get index path of cell
         
-        let index = button.tag
+        let point = tableView.convert(button.center, from: button.superview)
+        
+        guard let indexPath = tableView.indexPathForRow(at: point) else {
+            return
+        }
+        
+        let index = indexPath.row
         
         guard let users = users,
             index < users.count else {
@@ -183,6 +175,57 @@ class UserListViewController: UIViewController {
         try! realm.write {
             realm.delete(user)
         }
+        
+    }
+    
+    // MARK: - notification handlers
+    
+    func keyboardWillChangeFrame(notification: NSNotification) {
+        
+        guard UIApplication.shared.applicationState != .background else {
+            return
+        }
+        
+        guard let info = notification.userInfo as? [String: AnyObject],
+            let frameEndValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+            let durationNumber = info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+            let curveNumber = info[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            else {
+                return
+        }
+        
+        let frameEndRect = view.convert(frameEndValue.cgRectValue, from: nil)
+        let duration = durationNumber.doubleValue as TimeInterval
+        let options = UIViewAnimationOptions(rawValue: UInt(curveNumber.intValue << 16))
+        
+        // update layout
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        
+        // update constraints
+        
+        if frameEndRect.origin.y == view.bounds.size.height {
+            
+            // keyboard will hide
+            
+            createUserViewBottomConstraint.constant = 0
+            
+        } else {
+            
+            createUserViewBottomConstraint.constant = 0 + frameEndRect.height
+            
+        }
+        
+        // animate layout change
+        
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: options,
+                       animations: {
+                        self.view.layoutIfNeeded()
+        },
+                       completion: nil)
         
     }
 
@@ -232,6 +275,15 @@ extension UserListViewController: UITableViewDataSource {
                 
                 self?.tableView.endUpdates()
                 
+                // scroll to new cells
+                
+                if let maxIndex = insertions.max(){
+                   
+                    let indexPath = IndexPath(row: maxIndex, section: 0)
+                    self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+                    
+                }
+                
                 
             case .error(let err):
                 fatalError("\(err)")
@@ -272,7 +324,6 @@ extension UserListViewController: UITableViewDataSource {
         deleteButton.imageView?.contentMode = .scaleAspectFit
         deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
         
-        deleteButton.tag = indexPath.row
         deleteButton.addTarget(self, action: #selector(didPressDeleteButton), for: .touchUpInside)
         
         cell.accessoryView = deleteButton
@@ -282,5 +333,4 @@ extension UserListViewController: UITableViewDataSource {
     }
     
 }
-
 

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,22 +44,75 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-OE-Xdc">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-OE-Xdc">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Nt-bC-YaT" userLabel="Create User View">
+                                <rect key="frame" x="0.0" y="547" width="375" height="56"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frv-Pq-vx1" userLabel="Separator View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="MJH-2b-pb0"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d9n-lk-xWV" userLabel="User Name Text Field">
+                                        <rect key="frame" x="16" y="6" width="283" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="bi2-fI-LbT"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                                    </textField>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4J6-zi-b5J" userLabel="Create User Button">
+                                        <rect key="frame" x="309" y="0.0" width="56" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="4J6-zi-b5J" secondAttribute="height" multiplier="1:1" id="2Hb-yy-nlw"/>
+                                        </constraints>
+                                        <state key="normal" image="create"/>
+                                        <connections>
+                                            <action selector="didPressCreateUserButton" destination="RB9-y2-5Iy" eventType="touchUpInside" id="85R-8K-L71"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="frv-Pq-vx1" secondAttribute="trailing" id="19B-J9-2ix"/>
+                                    <constraint firstAttribute="bottom" secondItem="d9n-lk-xWV" secondAttribute="bottom" constant="6" id="8iN-CB-04x"/>
+                                    <constraint firstItem="frv-Pq-vx1" firstAttribute="top" secondItem="6Nt-bC-YaT" secondAttribute="top" id="Jbl-zw-G42"/>
+                                    <constraint firstItem="4J6-zi-b5J" firstAttribute="top" secondItem="6Nt-bC-YaT" secondAttribute="top" id="KvF-m9-MSL"/>
+                                    <constraint firstItem="d9n-lk-xWV" firstAttribute="top" secondItem="6Nt-bC-YaT" secondAttribute="top" constant="6" id="YHl-xh-Kur"/>
+                                    <constraint firstItem="4J6-zi-b5J" firstAttribute="leading" secondItem="d9n-lk-xWV" secondAttribute="trailing" constant="10" id="fpJ-QK-mdy"/>
+                                    <constraint firstItem="frv-Pq-vx1" firstAttribute="leading" secondItem="6Nt-bC-YaT" secondAttribute="leading" id="gn9-l2-8nQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="4J6-zi-b5J" secondAttribute="bottom" id="pFV-1Y-0i1"/>
+                                    <constraint firstAttribute="trailing" secondItem="4J6-zi-b5J" secondAttribute="trailing" constant="10" id="rbS-rP-gnr"/>
+                                    <constraint firstItem="d9n-lk-xWV" firstAttribute="leading" secondItem="6Nt-bC-YaT" secondAttribute="leading" constant="16" id="wch-I0-qkM"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="XLE-5K-cdO" firstAttribute="top" secondItem="6Nt-bC-YaT" secondAttribute="bottom" id="1a3-mx-wbE"/>
                             <constraint firstItem="6gK-OE-Xdc" firstAttribute="top" secondItem="bnG-ni-cyM" secondAttribute="bottom" id="9po-gB-qIm"/>
+                            <constraint firstItem="6Nt-bC-YaT" firstAttribute="top" secondItem="6gK-OE-Xdc" secondAttribute="bottom" id="BT8-mr-eOa"/>
                             <constraint firstItem="6gK-OE-Xdc" firstAttribute="leading" secondItem="6Fo-S3-PmV" secondAttribute="leading" id="FUj-yb-oSf"/>
-                            <constraint firstItem="XLE-5K-cdO" firstAttribute="top" secondItem="6gK-OE-Xdc" secondAttribute="bottom" id="eht-PN-u1g"/>
+                            <constraint firstAttribute="trailing" secondItem="6Nt-bC-YaT" secondAttribute="trailing" id="idC-Fj-uSK"/>
+                            <constraint firstItem="6Nt-bC-YaT" firstAttribute="leading" secondItem="6Fo-S3-PmV" secondAttribute="leading" id="ixM-Pi-3nI"/>
                             <constraint firstAttribute="trailing" secondItem="6gK-OE-Xdc" secondAttribute="trailing" id="lNy-H6-XIp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Live User List" id="gbv-ev-qs5"/>
                     <connections>
+                        <outlet property="createUserButton" destination="4J6-zi-b5J" id="gbc-K1-c3N"/>
+                        <outlet property="createUserView" destination="6Nt-bC-YaT" id="7t0-Mj-9IO"/>
+                        <outlet property="createUserViewBottomConstraint" destination="1a3-mx-wbE" id="sfH-HC-cCp"/>
+                        <outlet property="separatorView" destination="frv-Pq-vx1" id="ed1-qA-JBn"/>
+                        <outlet property="separatorViewHeightConstraint" destination="MJH-2b-pb0" id="L40-f9-4iQ"/>
                         <outlet property="tableView" destination="6gK-OE-Xdc" id="zKi-Fc-k3u"/>
+                        <outlet property="userNameTextField" destination="d9n-lk-xWV" id="59B-7E-Il4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yWT-jp-4DH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -66,4 +120,7 @@
             <point key="canvasLocation" x="-298" y="82"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="create" width="32" height="32"/>
+    </resources>
 </document>
